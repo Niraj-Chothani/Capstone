@@ -100,7 +100,7 @@ New Sales
 	
 		session_start();
 		
-		$qry1="SELECT id from admin where a_username='$_SESSION[user]'";
+		$qry1="SELECT id from chemist where a_username='$_SESSION[user]'";
 		$result1=$conn->query($qry1);
 		$row1=$result1->fetch_row();
 		$eid=$row1[0];

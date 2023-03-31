@@ -44,7 +44,7 @@ Pharmacia
 
 			if ($uname != "" && $password != ""){
 
-				$sql="SELECT e_id FROM emplogin WHERE e_username='$uname' AND e_pass='$password'";
+				$sql="SELECT e_id FROM admin WHERE e_username='$uname' AND e_pass='$password'";
 				$result = $conn->query($sql);
 				$row = $result->fetch_row();
 				if(!$row) {
@@ -55,7 +55,7 @@ Pharmacia
 					$emp=$row[0];
 					session_start();
 					$_SESSION['user']=$emp;
-					header("location:pharmmainpage.php");
+					header("location:pharmmainpage.php?username=".$uname);
 				}
 			}
 		}

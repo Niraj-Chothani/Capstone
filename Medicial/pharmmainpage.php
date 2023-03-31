@@ -44,7 +44,7 @@ body {font-family:Arial;}
 	?>
 
 	<div class="topnav">
-		<a href="logout1.php">Logout(signed in as Admin <?php echo ""; ?>)</a>
+		<a href="logout1.php">Logout(signed in as Admin <?php echo $_GET['username'] ?>)</a>
 	</div>
 	
 	<center>

@@ -80,17 +80,18 @@ Reports
 	<?php
 	
 	include "config.php";
-	$result=mysqli_query($conn,"CALL `STOCK`();");
+	$sql="SELECT * FROM `meds`";
+	$result=mysqli_query($conn,$sql);
 	if ($result->num_rows > 0) {
 	
 	while($row = $result->fetch_assoc()) {
 
 	echo "<tr>";
-		echo "<td>" . $row["med_id"]. "</td>";
-		echo "<td>" . $row["med_name"] . "</td>";
-		echo "<td style='color:red;'>" . $row["med_qty"]. "</td>";
-		echo "<td>" . $row["category"]. "</td>";
-		echo "<td>" . $row["med_price"] . "</td>";
+		echo "<td>" . $row["MED_ID"]. "</td>";
+		echo "<td>" . $row["MED_NAME"] . "</td>";
+		echo "<td style='color:red;'>" . $row["MED_QTY"]. "</td>";
+		echo "<td>" . $row["CATEGORY"]. "</td>";
+		echo "<td>" . $row["MED_PRICE"] . "</td>";
 	echo "</tr>";
 	}
 	echo "</table>";

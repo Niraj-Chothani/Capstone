@@ -43,7 +43,7 @@ Medical Store Management System
 
 			if ($uname != "" && $password != ""){
 		
-					$sql="SELECT * FROM admin WHERE a_username='$uname' AND a_password='$password'";
+					$sql="SELECT * FROM chemist WHERE a_username='$uname' AND a_password='$password'";
 					$result = $conn->query($sql);
 					$row = $result->fetch_row();
 					if(!$row) {
@@ -52,7 +52,7 @@ Medical Store Management System
 					else {
 						session_start();
 						$_SESSION['user']=$uname;
-						header('location:adminmainpage.php');
+						header('location:adminmainpage.php?username='.$uname);
 					}
 				}
 			}

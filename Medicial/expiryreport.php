@@ -83,20 +83,21 @@ Reports
 	<?php
 	
 		include "config.php";
-		$result=mysqli_query($conn,"CALL `EXPIRY`();");
+		$sql="SELECT * FROM `purchase`";
+		$result=mysqli_query($conn,$sql);
 		if ($result->num_rows > 0) { 
 
 		while($row = $result->fetch_assoc()) {
 			
 		echo "<tr>";
-			echo "<td>" . $row["p_id"]. "</td>";
-			echo "<td>" . $row["sup_id"]. "</td>";
-			echo "<td>" . $row["med_id"]. "</td>";
-			echo "<td>" . $row["p_qty"]. "</td>";
-			echo "<td>" . $row["p_cost"]. "</td>";
-			echo "<td>" . $row["pur_date"]. "</td>";
-			echo "<td>" . $row["mfg_date"] . "</td>";
-			echo "<td style='color:red;'>" . $row["exp_date"]. "</td>";
+			echo "<td>" . $row["P_ID"]. "</td>";
+			echo "<td>" . $row["SUP_ID"]. "</td>";
+			echo "<td>" . $row["MED_ID"]. "</td>";
+			echo "<td>" . $row["P_QTY"]. "</td>";
+			echo "<td>" . $row["P_COST"]. "</td>";
+			echo "<td>" . $row["PUR_DATE"]. "</td>";
+			echo "<td>" . $row["MFG_DATE"] . "</td>";
+			echo "<td style='color:red;'>" . $row["EXP_DATE"]. "</td>";
 		echo "</tr>";
 		}
 		echo "</table>";

@@ -57,7 +57,7 @@ Admin Dashboard
 	</div>
 
 	<div class="topnav">
-		<a href="logout.php">Logout(Logged in as Chemist)</a>
+		<a href="logout.php">Logout(Logged in as <?php echo $_GET['username']?>)</a>
 	</div>
 	
 	<center>
