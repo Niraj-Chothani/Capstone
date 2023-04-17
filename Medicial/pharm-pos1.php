@@ -2,34 +2,34 @@
 <html>
 
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css" href="nav2.css">
-<link rel="stylesheet" type="text/css" href="form3.css">
-<link rel="stylesheet" type="text/css" href="table2.css">
-<title>
-New Sales
-</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="nav2.css">
+    <link rel="stylesheet" type="text/css" href="form3.css">
+    <link rel="stylesheet" type="text/css" href="table2.css">
+    <title>
+        New Sales
+    </title>
 </head>
 
 <body>
 
-		<div class="sidenav">
-			<h2 style="font-family:Arial; color:white; text-align:center;"> Medical Store Management System </h2>
-			<p style="margin-top:-20px;color:white;line-height:1;font-size:12px;text-align:center"></p>
-			<a href="pharmmainpage.php">Dashboard</a>
-			
-			<a href="pharm-inventory.php">View Inventory</a>
-			<a href="pharm-pos1.php">Add New Sale</a>
-			<button class="dropdown-btn">Customers
-			<i class="down"></i>
-			</button>
-			<div class="dropdown-container">
-				<a href="pharm-customer.php">Add New Customer</a>
-				<a href="pharm-customer-view.php">View Customers</a>
-			</div>
-	</div>
+    <div class="sidenav">
+        <h2 style="font-family:Arial; color:white; text-align:center;"> Medical Store Management System </h2>
+        <p style="margin-top:-20px;color:white;line-height:1;font-size:12px;text-align:center"></p>
+        <a href="pharmmainpage.php">Dashboard</a>
 
-	<?php
+        <a href="pharm-inventory.php">View Inventory</a>
+
+        <button class="dropdown-btn">Customers
+            <i class="down"></i>
+        </button>
+        <div class="dropdown-container">
+            <a href="pharm-customer.php">Add New Customer</a>
+            <a href="pharm-customer-view.php">View Customers</a>
+        </div>
+    </div>
+
+    <?php
 		include "config.php";
 		session_start();
 	
@@ -40,25 +40,25 @@ New Sales
 		$ename=$row[0];
 	?>
 
-	<div class="topnav">
-		<a href="logout1.php">Logout(signed in as <?php echo $ename; ?>)</a>
-	</div>
-	
-	<center>
-	<div class="head">
-	<h2> POINT OF SALE</h2>
-	</div>
-	</center>
-	
+    <div class="topnav">
+        <a href="logout1.php">Logout(signed in as <?php echo $ename; ?>)</a>
+    </div>
 
-	<form action="<?=$_SERVER['PHP_SELF']?>" method="post">
-		<center>
-		
-		<select id="cid" name="cid">
-			<option value="0" selected="selected">*Select Customer ID (only once for a customer's sales)</option>
-					
-					
-	<?php	
+    <center>
+        <div class="head">
+            <h2> POINT OF SALE</h2>
+        </div>
+    </center>
+
+
+    <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
+        <center>
+
+            <select id="cid" name="cid">
+                <option value="0" selected="selected">*Select Customer ID (only once for a customer's sales)</option>
+
+
+                <?php	
 			
 		$qry1="SELECT c_id FROM customer";
 		$result1= $conn->query($qry1);
@@ -69,12 +69,12 @@ New Sales
 				echo "<option>".$row1["c_id"]."</option>";
 				}}
     ?>
-		
-    </select>
-	&nbsp;&nbsp;
-	<input type="submit" name="custadd" value="Add to Proceed.">
-	</form>
-	
+
+            </select>
+            &nbsp;&nbsp;
+            <input type="submit" name="custadd" value="Add to Proceed.">
+    </form>
+
     <?php
 			
 		if(isset($_GET['sid'])) 
@@ -94,13 +94,13 @@ New Sales
 			
 			
 	?>
-			
-		<form method="post">
-		<select id="med" name="med">
-			<option value="0" selected="selected">Select Medicine</option>
-					
-					
-	<?php	
+
+    <form method="post">
+        <select id="med" name="med">
+            <option value="0" selected="selected">Select Medicine</option>
+
+
+            <?php	
 		$qry3="SELECT med_name FROM meds";
 		$result3 = $conn->query($qry3);
 		echo mysqli_error($conn);
@@ -110,17 +110,17 @@ New Sales
 				echo "<option>".$row4["med_name"]."</option>";
 		}}
     ?>
-		
-    </select>
-	&nbsp;&nbsp;
-	<input type="submit" name="search" value="Search">
-	</form>
-	
-	<br><br><br>
-	</center>
-	
-	
-	<?php
+
+        </select>
+        &nbsp;&nbsp;
+        <input type="submit" name="search" value="Search">
+    </form>
+
+    <br><br><br>
+    </center>
+
+
+    <?php
 	
 		if(isset($_POST['search'])&&! empty($_POST['med'])) {
 	
@@ -132,41 +132,41 @@ New Sales
 					
 		}
 	?>
-			<div class="one row" style="margin-right:160px;">
-			<form method="post">
-					<div class="column">
-					
-					<label for="medid">Medicine ID:</label>
-					<input type="number" name="medid" value="<?php echo $row4[0]; ?>"readonly ><br><br>
-					
-					<label for="mdname">Medicine Name:</label>
-					<input type="text" name="mdname" value="<?php echo $row4[1]; ?>" readonly><br><br>
-					
-					</div>
-					<div class="column">
-					
-					<label for="mcat">Category:</label>
-					<input type="text" name="mcat" value="<?php echo $row4[3]; ?>" readonly><br><br>
-					
-					<label for="mloc">Location:</label>
-					<input type="text" name="mloc" value="<?php echo $row4[5]; ?>" readonly><br><br>
-					
-					</div>
-					<div class="column">
-					
-					<label for="mqty">Quantity Available:</label>
-					<input type="number" name="mqty" value="<?php echo $row4[2]; ?>" readonly><br><br>
-					
-					<label for="mprice">Price of One Unit:</label>
-					<input type="number" name="mprice" value="<?php echo $row4[4]; ?>" readonly><br><br>
-					
-					</div>
-					<label for="mcqty">Quantity Required:</label>
-					<input type="number" name="mcqty">
-					&nbsp;&nbsp;&nbsp;
-					<input type="submit" name="add" value="Add Medicine">&nbsp;&nbsp;&nbsp;
-			
-	<?php
+    <div class="one row" style="margin-right:160px;">
+        <form method="post">
+            <div class="column">
+
+                <label for="medid">Medicine ID:</label>
+                <input type="number" name="medid" value="<?php echo $row4[0]; ?>" readonly><br><br>
+
+                <label for="mdname">Medicine Name:</label>
+                <input type="text" name="mdname" value="<?php echo $row4[1]; ?>" readonly><br><br>
+
+            </div>
+            <div class="column">
+
+                <label for="mcat">Category:</label>
+                <input type="text" name="mcat" value="<?php echo $row4[3]; ?>" readonly><br><br>
+
+                <label for="mloc">Location:</label>
+                <input type="text" name="mloc" value="<?php echo $row4[5]; ?>" readonly><br><br>
+
+            </div>
+            <div class="column">
+
+                <label for="mqty">Quantity Available:</label>
+                <input type="number" name="mqty" value="<?php echo $row4[2]; ?>" readonly><br><br>
+
+                <label for="mprice">Price of One Unit:</label>
+                <input type="number" name="mprice" value="<?php echo $row4[4]; ?>" readonly><br><br>
+
+            </div>
+            <label for="mcqty">Quantity Required:</label>
+            <input type="number" name="mcqty">
+            &nbsp;&nbsp;&nbsp;
+            <input type="submit" name="add" value="Add Medicine">&nbsp;&nbsp;&nbsp;
+
+            <?php
 		
 		if(isset($_POST['add'])) {
 			
@@ -194,27 +194,27 @@ New Sales
 				}
 		}	
 	?>
-		
-		</form>
-	</div>
-	
+
+        </form>
+    </div>
+
 </body>
 
 <script>
-		var dropdown = document.getElementsByClassName("dropdown-btn");
-		var i;
+var dropdown = document.getElementsByClassName("dropdown-btn");
+var i;
 
-			for (i = 0; i < dropdown.length; i++) {
-			  dropdown[i].addEventListener("click", function() {
-			  this.classList.toggle("active");
-			  var dropdownContent = this.nextElementSibling;
-			  if (dropdownContent.style.display === "block") {
-			  dropdownContent.style.display = "none";
-			  } else {
-			  dropdownContent.style.display = "block";
-			  }
-			  });
-			}		
+for (i = 0; i < dropdown.length; i++) {
+    dropdown[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var dropdownContent = this.nextElementSibling;
+        if (dropdownContent.style.display === "block") {
+            dropdownContent.style.display = "none";
+        } else {
+            dropdownContent.style.display = "block";
+        }
+    });
+}
 </script>
 
 </html>

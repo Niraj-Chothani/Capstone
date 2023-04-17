@@ -71,6 +71,19 @@
             alt="Inventory">
     </a>
 
+    <br>
+    <a href="salesreport.php" title="View Transactions">
+        <img src="moneyicon.png"
+            style="padding:8px;margin-left:550px;margin-top:40px;width:200px;height:200px;border:2px solid black;"
+            alt="Transactions List">
+    </a>
+
+    <a href="stockreport.php" title="Low Stock Alert">
+        <img src="alert.png"
+            style="padding:8px;margin-left:100px;margin-top:40px;width:200px;height:200px;border:2px solid black;"
+            alt="Low Stock Report">
+    </a>
+
 
 </body>
 
