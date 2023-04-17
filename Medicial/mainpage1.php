@@ -2,38 +2,38 @@
 <html>
 
 <head>
-<link rel="stylesheet" type="text/css" href="login1.css">
-<div class="header">
-<h1>Medical Store Management System</h1>
- <p style="margin-top:-20px;line-height:1;font-size:30px;"></p>
- <p style="margin-top:-20px;line-height:1;font-size:20px;"></p>
-</div>
-<title>
-Pharmacia 
-</title>
+    <link rel="stylesheet" type="text/css" href="login1.css">
+    <div class="header">
+        <h1>Medical Store Management System</h1>
+        <p style="margin-top:-20px;line-height:1;font-size:30px;"></p>
+        <p style="margin-top:-20px;line-height:1;font-size:20px;"></p>
+    </div>
+    <title>
+        Pharmacia
+    </title>
 </head>
 
 <body>
 
-	<br><br><br><br>
-	<div class="container">
-		<form method="post" action="">
-			<div id="div_login">
-				<h1>Admin Login</h1>
-				<center>
-				<div>
-					<input type="text" class="textbox" id="uname" name="uname" placeholder="Username" />
-				</div>
-				<div>
-					<input type="password" class="textbox" id="pwd" name="pwd" placeholder="Password"/>
-				</div>
-				<div>
-					<input type="submit" value="Submit" name="submit" id="submit" />
-					<input type="submit" value="Click here for Chemist Login" name="psubmit" id="submit" />
-				</div>
-			 
-				
-	<?php
+    <br><br><br><br>
+    <div class="container">
+        <form method="post" action="">
+            <div id="div_login">
+                <h1>Admin Login</h1>
+                <center>
+                    <div>
+                        <input type="text" class="textbox" id="uname" name="uname" placeholder="Username" />
+                    </div>
+                    <div>
+                        <input type="password" class="textbox" id="pwd" name="pwd" placeholder="Password" />
+                    </div>
+                    <div>
+                        <input type="submit" value="Submit" name="submit" id="submit" />
+                        <input type="submit" value="Click here for Chemist Login" name="psubmit" id="submit" />
+                    </div>
+
+
+                    <?php
 				
 		include "config.php";
 
@@ -55,7 +55,7 @@ Pharmacia
 					$emp=$row[0];
 					session_start();
 					$_SESSION['user']=$emp;
-					header("location:pharmmainpage.php?username=".$uname);
+					header("location:admindashboard.php?username=".$uname);
 				}
 			}
 		}
@@ -66,15 +66,15 @@ Pharmacia
 		}
 	?>
 
-				</center> 
-			</div>
-		</form>
-	</div>
-	<div class=footer>
-	<br>
-	CopyRight. All Rights are reserved.
-	<br><br>
-	</div>
+                </center>
+            </div>
+        </form>
+    </div>
+    <div class=footer>
+        <br>
+        CopyRight. All Rights are reserved.
+        <br><br>
+    </div>
 
 </body>
 

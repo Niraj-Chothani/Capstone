@@ -9,24 +9,39 @@
         <p style="margin-top:-20px;line-height:1;font-size:20px;"></p>
     </div>
     <title>Medical Store Management System</title>
+    <script>
+    function isCheck() {
+        var pw = document.forms["myForm"]["un"].value;
+        var un = document.forms["myForm"]["pw"].value;
+        var fn = document.forms["myForm"]["fn"].value;
+        var ln = document.forms["myForm"]["ln"].value;
+        var ph = document.forms["myForm"]["ph"].value;
+        var bd = document.forms["myForm"]["bd"].value;
+
+        if (un == "" || pw == "" || fn == "" || ln == "" || ph == "" || bd == "") {
+            alert("Fill all details");
+            return false;
+        }
+    }
+    </script>
 </head>
 
 <body>
     <br><br><br><br>
     <div class="container">
-        <form method="post" action="">
+        <form name="myForm" method="post" action="">
             <div id="div_regis">
                 <h1>Chemist Registration Form</h1>
                 <center>
-                    <input type="text" name="username" class="textbox" placeholder="Username"><br><br>
-                    <input type="password" name="password" class="textbox" placeholder="Password"><br><br>
-                    <input type="text" name="first_name" class="textbox" placeholder="First Name"><br><br>
-                    <input type="text" name="last_name" class="textbox" placeholder="Last Name"><br><br>
+                    <input type="text" name="username" class="textbox" placeholder="Username" id="un"><br><br>
+                    <input type="password" name="password" class="textbox" placeholder="Password" id="pw"><br><br>
+                    <input type="text" name="first_name" class="textbox" placeholder="First Name" id="fn"><br><br>
+                    <input type="text" name="last_name" class="textbox" placeholder="Last Name" id="ln"><br><br>
                     <label>Photo:</label>
-                    <input type="file" name="photo" placeholder="Choose photo"><br><br>
+                    <input type="file" name="photo" placeholder="Choose photo" id="ph"><br><br>
                     <label>Birthdate:</label>
-                    <input type="date" name="birthdate"><br><br>
-                    <input type="submit" value="Register" name="rsubmit" id="submit" />
+                    <input type="date" name="birthdate" id="bd"><br><br>
+                    <input type="submit" value="Register" name="rsubmit" id="submit" onclick="return isCheck()" />
                     <input type="submit" value="Chemist Login" name="csubmit" id="csubmit" />
                 </center>
             </div>

@@ -3,8 +3,9 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="nav2.css">
+    <link rel="stylesheet" type="text/css" href="table1.css">
     <title>
-        Admin Dashboard
+        Customers
     </title>
 </head>
 
@@ -36,9 +37,15 @@
             <a href="purchase-view.php">Manage Purchases</a>
         </div>
 
+        <button class="dropdown-btn">Customers
+            <i class="down"></i>
+        </button>
+        <div class="dropdown-container">
+            <a href="customer-add.php">Add New Customer</a>
+            <a href="customer-view.php">Manage Customers</a>
+        </div>
         <a href="sales-view.php">View Sales Invoice Details</a>
         <a href="salesitems-view.php">View Sold Products Details</a>
-        <a href="pos1.php">Add New Sale</a>
         <button class="dropdown-btn">Reports
             <i class="down"></i>
         </button>
@@ -50,26 +57,31 @@
     </div>
 
     <div class="topnav">
-        <a href="logout.php">Logout(Logged in as <?php echo $_GET['username']?>)</a>
+        <a href="logout.php">Logout (Logged in as <?php echo $_GET['username']?>)</a>
     </div>
 
     <center>
         <div class="head">
-            <h2> CHEMIST DASHBOARD </h2>
+            <h2> CHEMIST DASHBOARD</h2>
         </div>
     </center>
 
-    <a href="pos1.php" title="Add New Sale">
-        <img src="carticon1.png"
-            style="padding:8px;margin-left:450px;margin-top:40px;width:200px;height:200px;border:2px solid black;"
-            alt="Add New Sale">
-    </a>
 
-    <a href="inventory-view.php" title="View Chemist">
+    <a href="inventory-view.php" title="View Inventory">
         <img src="inventory.png"
-            style="padding:8px;margin-left:100px;margin-top:40px;width:200px;height:200px;border:2px solid black;"
+            style="padding:8px;margin-left: 450px;margin-top:120px;width:200px;height:200px;border:2px solid black;"
             alt="Inventory">
     </a>
+    <a href="salesreport.php" title="View Transactions">
+        <img src="moneyicon.png" style="padding:8px; margin-left: 40px;width:200px;height:200px;border:2px solid black;"
+            alt="Transactions List">
+    </a>
+
+    <a href="stockreport.php" title="Low Stock Alert">
+        <img src="alert.png" style="padding:8px;margin-left: 40px;width:200px;height:200px;border:2px solid black;"
+            alt="Low Stock Report">
+    </a>
+
 
 
 </body>
@@ -90,7 +102,5 @@ for (i = 0; i < dropdown.length; i++) {
     });
 }
 </script>
-
-
 
 </html>

@@ -15,14 +15,12 @@
         <h2 style="font-family:Arial; color:white; text-align:center;"> Medical Store Management System </h2>
         <p style="margin-top:-20px;color:white;line-height:1;font-size:12px;text-align:center"></p>
         <a href="adminmainpage.php">Dashboard</a>
-        <button class="dropdown-btn">Inventory
-            <i class="down"></i>
-        </button>
+        <a href="adminchemistview.php">Inventory</a>
 
     </div>
 
     <div class="topnav">
-        <a href="logout.php">Logout</a>
+        <a href="logout.php">Logout(Logged in as <?php echo $_GET['username']?>)</a>
     </div>
 
     <center>
