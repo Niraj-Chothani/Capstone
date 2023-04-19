@@ -10,17 +10,19 @@
 </head>
 
 <body>
-
+    <?php global $uname;
+    $uname = $_GET['username'];
+    ?>
     <div class="sidenav">
         <h2 style="font-family:Arial; color:white; text-align:center;"> Medical Store Management System </h2>
         <p style="margin-top:-20px;color:white;line-height:1;font-size:12px;text-align:center"></p>
-        <a href="adminmainpage.php">Dashboard</a>
+        <a href="admindashboard.php">Dashboard</a>
         <a href="adminchemistview.php">Inventory</a>
 
     </div>
 
     <div class="topnav">
-        <a href="logout.php">Logout(Logged in as <?php echo $_GET['username']?>)</a>
+        <a href="logout.php">Logout (Logged in as <?php echo $uname;?>)</a>
     </div>
 
     <center>
@@ -41,32 +43,32 @@
 
         </tr>
         <?php
-	
-	include "config.php";
-	$sql = "SELECT username,password,f_name,l_name,photo,b_date FROM registration";
-	$result = $conn->query($sql);
-	if ($result->num_rows > 0) {
-	
-		while($row = $result->fetch_assoc()) {
 
-		echo "<tr>";
-			echo "<td>" . $row["username"]. "</td>";
-			echo "<td>" . $row["password"] . "</td>";
-			echo "<td>" . $row["f_name"]. "</td>";
-			echo "<td>" . $row["l_name"]. "</td>";
-			echo "<td>" . $row["photo"] . "</td>";
-			echo "<td>" . $row["b_date"]. "</td>";
-			echo "<td align=center>";
-				echo "<a class='button1 edit-btn' href=customer-update.php?id=".$row['username'].">Edit</a>";
-				echo "<a class='button1 del-btn' href=customer-delete.php?id=".$row['password'].">Delete</a>";
-			echo "</td>";
-		echo "</tr>";
-		}
-	echo "</table>";
-	} 
+        include "config.php";
+        $sql = "SELECT username,password,f_name,l_name,photo,b_date FROM registration";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
 
-	$conn->close();
-	?>
+            while ($row = $result->fetch_assoc()) {
+
+                echo "<tr>";
+                echo "<td>" . $row["username"] . "</td>";
+                echo "<td>" . $row["password"] . "</td>";
+                echo "<td>" . $row["f_name"] . "</td>";
+                echo "<td>" . $row["l_name"] . "</td>";
+                echo "<td>" . $row["photo"] . "</td>";
+                echo "<td>" . $row["b_date"] . "</td>";
+                echo "<td align=center>";
+                echo "<a class='button1 edit-btn' href=customer-update.php?id=" . $row['username'] . ">Edit</a>";
+                echo "<a class='button1 del-btn' href=customer-delete.php?id=" . $row['password'] . ">Delete</a>";
+                echo "</td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+        }
+
+        $conn->close();
+        ?>
 
 </body>
 

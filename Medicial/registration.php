@@ -1,52 +1,74 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <link rel="stylesheet" type="text/css" href="registration.css">
-    <div class="header">
-        <h1>Medical Store Management System</h1>
-        <p style="margin-top:-20px;line-height:1;font-size:30px;"></p>
-        <p style="margin-top:-20px;line-height:1;font-size:20px;"></p>
-    </div>
-    <title>Medical Store Management System</title>
-    <script>
-    function isCheck() {
-        var pw = document.forms["myForm"]["un"].value;
-        var un = document.forms["myForm"]["pw"].value;
-        var fn = document.forms["myForm"]["fn"].value;
-        var ln = document.forms["myForm"]["ln"].value;
-        var ph = document.forms["myForm"]["ph"].value;
-        var bd = document.forms["myForm"]["bd"].value;
+<link rel="stylesheet" type="text/css" href="./login1.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-        if (un == "" || pw == "" || fn == "" || ln == "" || ph == "" || bd == "") {
-            alert("Fill all details");
-            return false;
-        }
-    }
-    </script>
+<head>
+    <div class="header">
+        <h1>Medical Management System</h1>
+        <p style="margin-top:-20px;margin-bottom: 30px;line-height:1;font-size:30px;"></p>
+        <p style="margin-top:-20px;margin-bottom: 30px;line-height:1;font-size:20px;"></p>
+    </div>
+    <title>
+        Medical Management System
+    </title>
 </head>
 
 <body>
-    <br><br><br><br>
-    <div class="container">
-        <form name="myForm" method="post" action="">
-            <div id="div_regis">
-                <h1>Chemist Registration Form</h1>
-                <center>
-                    <input type="text" name="username" class="textbox" placeholder="Username" id="un"><br><br>
-                    <input type="password" name="password" class="textbox" placeholder="Password" id="pw"><br><br>
-                    <input type="text" name="first_name" class="textbox" placeholder="First Name" id="fn"><br><br>
-                    <input type="text" name="last_name" class="textbox" placeholder="Last Name" id="ln"><br><br>
-                    <label>Photo:</label>
-                    <input type="file" name="photo" placeholder="Choose photo" id="ph"><br><br>
-                    <label>Birthdate:</label>
-                    <input type="date" name="birthdate" id="bd"><br><br>
-                    <input type="submit" value="Register" name="rsubmit" id="submit" onclick="return isCheck()" />
-                    <input type="submit" value="Chemist Login" name="csubmit" id="csubmit" />
-                </center>
+    <div class="login-box" style="margin-top: 70pxpx; overflow: auto;">
+        <h2>Registration Form</h2>
+        <form method="post">
+            <div class="user-box">
+                <input type="text" name="username" required="Must Filled" id="username">
+                <label>Username</label>
             </div>
-        </form>
-        <?php
+            <div class="user-box">
+                <input type="password" name="password" required="Must Filled" id="password">
+                <label>Password</label>
+            </div>
+            <div class="user-box">
+                <input type="text" name="first_name" required="Must Filled" id="first_name">
+                <label>Firstname</label>
+            </div>
+            <div class="user-box">
+                <input type="text" name="last_name" required="Must Filled" id="last_name">
+                <label>Lastname</label>
+            </div>
+            <div class="user-box">
+                <input type="file" name="photo" placeholder="Choose photo" required="Must Filled" id="photo">
+                <!-- <label>Photo:</label> -->
+            </div>
+            <div class="user-box">
+                <input type="date" name="birthdate" required="Must Filled" id="birthdate">
+                <!-- <label>BirthDate</label> -->
+            </div>
+
+            <div>
+                <button id="rsubmit" type="submit" name="rsubmit" value="Submit" class="btn btn-primary"
+                    style="margin: 0px;">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Register
+                </button>
+                <a id="csubmit" type="submit" name="csubmit" value="Submit" href="mainpage.php"
+                    style="margin: 0px; margin-left: 15px;">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Chemist Login
+                </a>
+            </div>
+    </div>
+    </form>
+
+    <?php
         include "config.php";
 
         if (isset($_POST['rsubmit'])) {
@@ -73,14 +95,10 @@
         }
        
 
-        if (isset($_POST['csubmit'])) {
-        header("location:mainpage.php");
-        }
 
         ?>
 
     </div>
-
     <div class=footer>
         <br>
         CopyRight. All Rights are reserved.

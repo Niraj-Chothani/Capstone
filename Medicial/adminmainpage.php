@@ -10,8 +10,10 @@
 </head>
 
 <body>
-
-    <div class="sidenav">
+    <?php global $uname;
+    $uname = $_GET['username'];
+    ?>
+    <div class=" sidenav">
         <h2 style="font-family:Arial; color:white; text-align:center;"> Medical Store Management System </h2>
         <p style="margin-top:-20px;color:white;line-height:1;font-size:12px;text-align:center"></p>
         <a href="adminmainpage.php">Dashboard</a>
@@ -57,33 +59,29 @@
     </div>
 
     <div class="topnav">
-        <a href="logout.php">Logout (Logged in as <?php echo $_GET['username']?>)</a>
+        <a href="logout.php">Logout (Logged in as <?php echo $uname; ?>)</a>
     </div>
 
     <center>
-        <div class="head">
+        <div class="head" style="background:linear-gradient(#141e30, #243b55);
+color: white;">
             <h2> CHEMIST DASHBOARD</h2>
         </div>
     </center>
 
-
     <a href="inventory-view.php" title="View Inventory">
-        <img src="inventory.png"
-            style="padding:8px;margin-left: 450px;margin-top:120px;width:200px;height:200px;border:2px solid black;"
-            alt="Inventory">
-    </a>
+        <img src="inventory.png" style="padding:8px;margin-left: 450px;margin-top:120px;width:200px;height:200px;border:2px solid black; box-shadow: 0 8px 25px 0 rgba(71, 43, 229, 0.2), 0 8px 25px 0 rgba(71, 43, 229, 0.2);
+    text-align: center;" alt="Inventory"></a>
     <a href="salesreport.php" title="View Transactions">
-        <img src="moneyicon.png" style="padding:8px; margin-left: 40px;width:200px;height:200px;border:2px solid black;"
-            alt="Transactions List">
+        <img src="moneyicon.png" style="padding:8px; margin-left: 40px;width:200px;height:200px;border:2px solid black; box-shadow: 0 8px 25px 0 rgba(71, 43, 229, 0.2), 0 8px 25px 0 rgba(71, 43, 229, 0.2);
+    text-align: center;" alt="Transactions List">
     </a>
 
     <a href="stockreport.php" title="Low Stock Alert">
-        <img src="alert.png" style="padding:8px;margin-left: 40px;width:200px;height:200px;border:2px solid black;"
+        <img src="alert.png"
+            style="padding:8px;margin-left: 40px;width:200px;height:200px;border:2px solid black; box-shadow: 0 8px 25px 0 rgba(71, 43, 229, 0.2), 0 8px 25px 0 rgba(71, 43, 229, 0.2);"
             alt="Low Stock Report">
     </a>
-
-
-
 </body>
 
 <script>

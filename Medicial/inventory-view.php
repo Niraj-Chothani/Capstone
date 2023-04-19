@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="table1.css">
     <link rel="stylesheet" type="text/css" href="nav2.css">
+
     <title>Medicines</title>
 </head>
 
@@ -67,6 +68,8 @@
         </div>
     </center>
 
+
+
     <table align="right" id="table1" style="margin-right:100px;">
         <tr>
             <th>Medicine ID</th>
@@ -79,35 +82,35 @@
         </tr>
 
         <?php
-	include "config.php";
-	
-		$sql = "SELECT med_id, med_name,med_qty,category,med_price,location_rack FROM meds";
-		$result = $conn->query($sql);
-		if ($result->num_rows > 0) {
-		
-		while($row = $result->fetch_assoc()) {
+        include "config.php";
 
-		echo "<tr>";
-			echo "<td>" . $row["med_id"]. "</td>";
-			echo "<td>" . $row["med_name"] . "</td>";
-			echo "<td>" . $row["med_qty"]. "</td>";
-			echo "<td>" . $row["category"]. "</td>";
-			echo "<td>" . $row["med_price"] . "</td>";
-			echo "<td>" . $row["location_rack"]. "</td>";
-			echo "<td align=center>";
-						 
-				echo "<a class='button1 edit-btn' href=inventory-update.php?id=".$row['med_id'].">Edit</a>";
-			
-				echo "<a class='button1 del-btn' href=inventory-delete.php?id=".$row['med_id'].">Delete</a>";
-				
-			echo "</td>";
-		echo "</tr>";
-		}
-		echo "</table>";
-		} 
+        $sql = "SELECT med_id, med_name,med_qty,category,med_price,location_rack FROM meds";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
 
-	$conn->close();
-	?>
+            while ($row = $result->fetch_assoc()) {
+
+                echo "<tr>";
+                echo "<td>" . $row["med_id"] . "</td>";
+                echo "<td>" . $row["med_name"] . "</td>";
+                echo "<td>" . $row["med_qty"] . "</td>";
+                echo "<td>" . $row["category"] . "</td>";
+                echo "<td>" . $row["med_price"] . "</td>";
+                echo "<td>" . $row["location_rack"] . "</td>";
+                echo "<td align=center>";
+
+                echo "<a class='button1 edit-btn' href=inventory-update.php?id=" . $row['med_id'] . ">Edit</a>";
+
+                echo "<a class='button1 del-btn' href=inventory-delete.php?id=" . $row['med_id'] . ">Delete</a>";
+
+                echo "</td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+        }
+
+        $conn->close();
+        ?>
 
 </body>
 

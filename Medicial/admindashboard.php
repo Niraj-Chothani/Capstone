@@ -11,10 +11,14 @@
 
 <body>
 
+    <?php global $uname;
+    $uname = $_GET['username'];
+    ?>
+
     <div class="sidenav">
         <h2 style="font-family:Arial; color:white; text-align:center;"> Medical Store Management System </h2>
         <p style="margin-top:-20px;color:white;line-height:1;font-size:12px;text-align:center"></p>
-        <a href="adminmainpage.php">Dashboard</a>
+        <a href="admindashboard.php">Dashboard</a>
         <a href="adminchemistview.php">View Chemist</a>
 
     </div>
@@ -34,7 +38,7 @@
 
 
     <div class="topnav">
-        <a href="logout.php">Logout(Logged in as <?php echo $_GET['username']?>)</a>
+        <a href="logout.php">Logout(Logged in as <?php echo $uname;?>)</a>
     </div>
 
 
