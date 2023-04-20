@@ -164,17 +164,18 @@ if (isset($_POST['add'])) {
     $pid = mysqli_real_escape_string($conn, $_REQUEST['pid']);
     $sid = mysqli_real_escape_string($conn, $_REQUEST['sid']);
     $mid = mysqli_real_escape_string($conn, $_REQUEST['mid']);
-    $qty = mysqli_real_escape_string($conn, $_REQUEST['pqty']);
-    $cost = mysqli_real_escape_string($conn, $_REQUEST['pcost']);
+    $pqty = mysqli_real_escape_string($conn, $_REQUEST['pqty']);
+    $pcost = mysqli_real_escape_string($conn, $_REQUEST['pcost']);
     $pdate = mysqli_real_escape_string($conn, $_REQUEST['pdate']);
     $mdate = mysqli_real_escape_string($conn, $_REQUEST['mdate']);
     $edate = mysqli_real_escape_string($conn, $_REQUEST['edate']);
 
-    $sql = "INSERT INTO purchase VALUES ($pid, $sid, $mid,'$qty','$cost','$pdate','$mdate','$edate')";
+
+    $sql = "INSERT INTO purchase VALUES ($pid, $sid, $mid,$pqty,$pcost,$pdate,$mdate,$edate)";
     if (mysqli_query($conn, $sql)) {
-        echo "<p style='font-size:8;'>Purchase details successfully added!</p>";
+        echo "<p style='font-size:8;'>Customer successfully added!</p>";
     } else {
-        echo "<p style='font-size:8;color:red;'>Error! Check details.</p>";
+        echo "<p style='font-size:8; color:red;'>Error! Check details.</p>";
     }
 }
 

@@ -1,13 +1,12 @@
 <?php
-	include "config.php";
-	
-	if(isset($_GET['id']))
-	{
-		$id=$_GET['id'];
-		$qry1="SELECT * FROM meds WHERE med_id='$id'";
-		$result = $conn->query($qry1);
-		$row = $result -> fetch_row();
-	}
+include "config.php";
+
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $qry1 = "SELECT * FROM meds WHERE med_id='$id'";
+    $result = $conn->query($qry1);
+    $row = $result->fetch_row();
+}
 ?>
 
 <!DOCTYPE html>
@@ -76,14 +75,14 @@
     </div>
 
     <center>
-        <div class="head">
+        <div class="head" style="border-radius: 30px;background:linear-gradient(#141e30, #243b55);color: white;box-shadow: 0 15px 25px rgba(7, 205, 240, 0.6);">
             <h2> UPDATE MEDICINE DETAILS</h2>
         </div>
     </center>
 
-    <div class="one">
+    <div class="one" style="border-radius: 30px;margin-top: 50px; background-color: #217F7A">
         <div class="row">
-            <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
+            <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
                 <div class="column">
                     <p>
                         <label for="medid">Medicine ID:</label><br>
@@ -114,47 +113,47 @@
                     </p>
                 </div>
 
-                <input type="submit" name="update" value="Update">
+                <input type="submit" name="update" value="Update" style="border-radius: 15px;background:linear-gradient(#141e30, #243b55);color: white;box-shadow: 0 15px 25px rgba(7, 205, 240, 0.6);">
             </form>
 
             <?php
 
-		if( isset($_POST['medname'])||isset($_POST['qty'])||isset($_POST['cat'])||isset($_POST['sp'])||isset($_POST['loc'])) {
-			 $id=$_POST['medid'];
-			 $name=$_POST['medname'];
-			 $qty=$_POST['qty'];
-			 $cat=$_POST['cat'];
-			 $price=$_POST['sp'];
-			 $lcn=$_POST['loc'];
-			 
-		$sql="UPDATE meds SET med_name='$name',med_qty='$qty',category='$cat',med_price='$price',location_rack='$lcn' where med_id='$id'";
-		if ($conn->query($sql))
-		header("location:inventory-view.php");
-		else
-		echo "<p style='font-size:8;color:red;'>Error! Unable to update.</p>";
-		}
+            if (isset($_POST['medname']) || isset($_POST['qty']) || isset($_POST['cat']) || isset($_POST['sp']) || isset($_POST['loc'])) {
+                $id = $_POST['medid'];
+                $name = $_POST['medname'];
+                $qty = $_POST['qty'];
+                $cat = $_POST['cat'];
+                $price = $_POST['sp'];
+                $lcn = $_POST['loc'];
 
-	?>
+
+                $sql = "UPDATE meds SET med_name='$name',med_qty='$qty',category='$cat',med_price='$price',location_rack='$lcn' where med_id='$id'";
+                if ($conn->query($sql))
+                    header("location:inventory-view.php");
+                
+            }
+
+            ?>
         </div>
     </div>
 
 </body>
 
 <script>
-var dropdown = document.getElementsByClassName("dropdown-btn");
-var i;
+    var dropdown = document.getElementsByClassName("dropdown-btn");
+    var i;
 
-for (i = 0; i < dropdown.length; i++) {
-    dropdown[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var dropdownContent = this.nextElementSibling;
-        if (dropdownContent.style.display === "block") {
-            dropdownContent.style.display = "none";
-        } else {
-            dropdownContent.style.display = "block";
-        }
-    });
-}
+    for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        });
+    }
 </script>
 
 </html>

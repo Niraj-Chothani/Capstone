@@ -34,33 +34,37 @@
 
     <table align="right" id="table1" style="margin-right:100px;">
         <tr>
+            <th>ID</th>
             <th>UserName</th>
             <th>Password</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Photo</th>
             <th>Birth date</th>
+            <th>Action</th>
 
         </tr>
         <?php
 
         include "config.php";
-        $sql = "SELECT username,password,f_name,l_name,photo,b_date FROM registration";
+        $sql = "SELECT id,username,password,f_name,l_name,photo,b_date FROM registration";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
 
             while ($row = $result->fetch_assoc()) {
 
                 echo "<tr>";
+                echo "<td>" . $row["id"] . "</td>";
                 echo "<td>" . $row["username"] . "</td>";
                 echo "<td>" . $row["password"] . "</td>";
                 echo "<td>" . $row["f_name"] . "</td>";
                 echo "<td>" . $row["l_name"] . "</td>";
                 echo "<td>" . $row["photo"] . "</td>";
                 echo "<td>" . $row["b_date"] . "</td>";
+
                 echo "<td align=center>";
-                echo "<a class='button1 edit-btn' href=customer-update.php?id=" . $row['username'] . ">Edit</a>";
-                echo "<a class='button1 del-btn' href=customer-delete.php?id=" . $row['password'] . ">Delete</a>";
+                echo "<a class='button1 edit-btn' href=adminchemist-update.php?id=" . $row['id'] . ">Edit</a>";
+                echo "<a class='button1 del-btn' href=adminchemist-delete.php?id=" . $row['id'] . ">Delete</a>";
                 echo "</td>";
                 echo "</tr>";
             }

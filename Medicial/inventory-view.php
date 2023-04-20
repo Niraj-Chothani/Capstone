@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
     <style>
         img:hover {
             opacity: 0.5;

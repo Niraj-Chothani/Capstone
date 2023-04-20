@@ -61,13 +61,13 @@
     </div>
 
     <center>
-        <div class="head">
+        <div class="head" style="border-radius: 15px;background:linear-gradient(#141e30, #243b55);color: white;box-shadow: 0 15px 25px rgba(7, 205, 240, 0.6);">
             <h2> UPDATE CUSTOMER DETAILS</h2>
         </div>
     </center>
 
 
-    <div class="one">
+    <div class="one" style="border-radius: 30px;margin-top: 50px; background-color: #217F7A">
         <div class="row">
 
             <?php
@@ -137,7 +137,7 @@
                     </p>
                 </div>
 
-                <input type="submit" name="update" value="Update">
+                <input type="submit" name="update" value="Update" style="border-radius: 15px;background:linear-gradient(#141e30, #243b55);color: white;box-shadow: 0 15px 25px rgba(7, 205, 240, 0.6);">
 
             </form>
         </div>
