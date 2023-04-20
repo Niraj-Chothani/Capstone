@@ -66,8 +66,7 @@
 		 }
 	?>
         <h2 style="font-family:Arial; color:white; text-align:center;"> Medical Store Management System </h2>
-        <p style="margin-top:-20px;color:white;line-height:1;font-size:12px;text-align:center">Developed by, Abhishek
-            Sharma, 2021</p>
+        <p style="margin-top:-20px;color:white;line-height:1;font-size:12px;text-align:center;margin-top:30px;"></p>
         <a href="adminmainpage.php">Dashboard</a>
         <button class="dropdown-btn">Inventory
             <i class="down"></i>
@@ -116,13 +115,13 @@
     </div>
 
     <center>
-        <div class="head">
+        <div class="head" style="border-radius: 15px;background:linear-gradient(#141e30, #243b55);color: white;box-shadow: 0 15px 25px rgba(7, 205, 240, 0.6);">
             <h2> UPDATE PURCHASE DETAILS</h2>
         </div>
     </center>
 
 
-    <div class="one">
+    <div class="one" style="border-radius: 30px;margin-top: 50px; background-color: #217F7A;padding-left: 80px; margin-right:58px;margin:50px">
         <div class="row">
             <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
                 <div class="column">
@@ -165,7 +164,7 @@
                     </p>
                 </div>
 
-                <input type="submit" name="update" value="Update">
+                <input type="submit" name="update" value="Update" style="border-radius: 15px;background:linear-gradient(#141e30, #243b55);color: white;box-shadow: 0 15px 25px rgba(7, 205, 240, 0.6);">
             </form>
         </div>
     </div>

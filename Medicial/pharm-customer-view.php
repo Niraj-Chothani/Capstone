@@ -36,7 +36,7 @@
 
     <div class="sidenav">
         <h2 style="font-family:Arial; color:white; text-align:center;"> Medical Store Management System </h2>
-        <p style="margin-top:-20px;color:white;line-height:1;font-size:12px;text-align:center"></p>
+        <p style="margin-top:-20px;color:white;line-height:1;font-size:12px;text-align:center;margin-top:30px;"></p>
         <a href="pharmmainpage.php">Dashboard</a>
 
         <a href="pharm-inventory.php">View Inventory</a>
