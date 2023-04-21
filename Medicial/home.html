@@ -9,7 +9,6 @@
     <meta content="" name="keywords" />
 
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon" />
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
     <!-- Google Fonts -->
@@ -36,13 +35,14 @@
     <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
 
-    <link href="./assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
   </head>
 
   <body>
     <header id="header" class="fixed-top">
       <div class="container d-flex align-items-center justify-content-between">
         <h1 class="logo"><a href="index.html">FarmMedi</a></h1>
+        <!-- logo <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
         <nav id="navbar" class="navbar">
           <ul>
@@ -54,13 +54,17 @@
               <a class="nav-link scrollto" href="service.html">Services</a>
             </li>
             <li>
-              <a class="getstarted scrollto" href="mainpage.php">Login</a>
+              <a class="getstarted scrollto" href="mainpage.php" id="lgBtn"
+                >Login</a
+              >
             </li>
           </ul>
           <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>
+        <!-- .navbar -->
       </div>
     </header>
+
     <section id="hero" class="d-flex align-items-center">
       <div
         class="container position-relative"
@@ -72,6 +76,9 @@
             <h1>We're Always Ready</h1>
             <h1>To Help</h1>
           </div>
+        </div>
+        <div class="text-center">
+          <a href="mainpage.php" class="btn-get-started scrollto"> Login </a>
         </div>
 
         <div class="row icon-boxes">
@@ -140,6 +147,8 @@
         </div>
       </div>
     </section>
+
+    <!-- Vendor JS Files -->
     <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
     <script src="assets/vendor/aos/aos.js"></script>
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

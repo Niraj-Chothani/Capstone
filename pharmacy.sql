@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2020 at 06:39 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.2.28
+-- Generation Time: Apr 17, 2023 at 10:36 AM
+-- Server version: 10.4.25-MariaDB
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -22,74 +21,6 @@ SET time_zone = "+00:00";
 -- Database: `pharmacy`
 --
 
-DELIMITER $$
---
--- Procedures
---
-CREATE DEFINER=`root`@`localhost` PROCEDURE `EXPIRY` ()  NO SQL
-BEGIN
-SELECT p_id,sup_id,med_id,p_qty,p_cost,pur_date,mfg_date,exp_date FROM purchase where exp_date between CURDATE() and DATE_SUB(CURDATE(), INTERVAL -6 MONTH);
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SEARCH_INVENTORY` (IN `search` VARCHAR(255))  NO SQL
-BEGIN
-DECLARE mid DECIMAL(6);
-DECLARE mname VARCHAR(50);
-DECLARE mqty INT;
-DECLARE mcategory VARCHAR(20);
-DECLARE mprice DECIMAL(6,2);
-DECLARE location VARCHAR(30);
-DECLARE exit_loop BOOLEAN DEFAULT FALSE;
-DECLARE MED_CURSOR CURSOR FOR SELECT MED_ID,MED_NAME,MED_QTY,CATEGORY,MED_PRICE,LOCATION_RACK FROM MEDS;
-DECLARE CONTINUE HANDLER FOR NOT FOUND SET exit_loop=TRUE;
-CREATE TEMPORARY TABLE IF NOT EXISTS T1 (medid decimal(6),medname varchar(50),medqty int,medcategory varchar(20),medprice decimal(6,2),medlocation varchar(30));
-OPEN MED_CURSOR;
-med_loop: LOOP
-FETCH FROM MED_CURSOR INTO mid,mname,mqty,mcategory,mprice,location;
-IF exit_loop THEN
-LEAVE med_loop;
-END IF;
-
-IF(CONCAT(mid,mname,mcategory,location) LIKE CONCAT('%',search,'%')) THEN
-INSERT INTO T1(medid,medname,medqty,medcategory,medprice,medlocation)
-VALUES(mid,mname,mqty,mcategory,mprice,location);
-END IF;
-END LOOP med_loop;
-CLOSE MED_CURSOR;
-SELECT medid,medname,medqty,medcategory,medprice,medlocation FROM T1; 
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `STOCK` ()  NO SQL
-BEGIN
-SELECT med_id, med_name,med_qty,category,med_price,location_rack FROM meds where med_qty<=50;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `TOTAL_AMT` (IN `ID` INT, OUT `AMT` DECIMAL(8,2))  NO SQL
-BEGIN
-UPDATE SALES SET S_DATE=SYSDATE(),S_TIME=CURRENT_TIMESTAMP(),TOTAL_AMT=(SELECT SUM(TOT_PRICE) FROM SALES_ITEMS WHERE SALES_ITEMS.SALE_ID=ID) WHERE SALES.SALE_ID=ID;
-SELECT TOTAL_AMT INTO AMT FROM SALES WHERE SALE_ID=ID;
-END$$
-
---
--- Functions
---
-CREATE DEFINER=`root`@`localhost` FUNCTION `P_AMT` (`start` DATE, `end` DATE) RETURNS DECIMAL(8,2) NO SQL
-    DETERMINISTIC
-BEGIN
-DECLARE PAMT DECIMAL(8,2) DEFAULT 0.0;
-SELECT SUM(P_COST) INTO PAMT FROM PURCHASE WHERE PUR_DATE >= start AND PUR_DATE<= end;
-RETURN PAMT;
-END$$
-
-CREATE DEFINER=`root`@`localhost` FUNCTION `S_AMT` (`start` DATE, `end` DATE) RETURNS DECIMAL(8,2) NO SQL
-BEGIN
-DECLARE SAMT DECIMAL(8,2) DEFAULT 0.0;
-SELECT SUM(TOTAL_AMT) INTO SAMT FROM SALES WHERE S_DATE >= start AND S_DATE<= end;
-RETURN SAMT;
-END$$
-
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -97,17 +28,42 @@ DELIMITER ;
 --
 
 CREATE TABLE `admin` (
-  `ID` decimal(7,0) NOT NULL,
-  `A_USERNAME` varchar(50) NOT NULL,
-  `A_PASSWORD` varchar(50) NOT NULL
+  `E_ID` decimal(7,0) NOT NULL,
+  `E_USERNAME` varchar(20) NOT NULL,
+  `E_PASS` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`ID`, `A_USERNAME`, `A_PASSWORD`) VALUES
-('1', 'admin', 'password');
+INSERT INTO `admin` (`E_ID`, `E_USERNAME`, `E_PASS`) VALUES
+('4567003', 'hello', 'hello'),
+('1', 'kashyap', 'password'),
+('1', 'mukund', 'password'),
+('4567005', 'niraj', 'password');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chemist`
+--
+
+CREATE TABLE `chemist` (
+  `ID` decimal(7,0) NOT NULL,
+  `A_USERNAME` varchar(50) NOT NULL,
+  `A_PASSWORD` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `chemist`
+--
+
+INSERT INTO `chemist` (`ID`, `A_USERNAME`, `A_PASSWORD`) VALUES
+('1', 'admin', 'password'),
+('1', 'kashyap', 'password'),
+('1', 'mukund', 'password'),
+('1', 'niraj', 'password');
 
 -- --------------------------------------------------------
 
@@ -123,45 +79,21 @@ CREATE TABLE `customer` (
   `C_SEX` varchar(6) NOT NULL,
   `C_PHNO` decimal(10,0) NOT NULL,
   `C_MAIL` varchar(40) DEFAULT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `customer`
 --
 
 INSERT INTO `customer` (`C_ID`, `C_FNAME`, `C_LNAME`, `C_AGE`, `C_SEX`, `C_PHNO`, `C_MAIL`) VALUES
+('1', 'Niraj ', 'Chothani', 20, 'Male', '1', 'xyz@gail.com'),
+('2', 'Yash', 'Patel', 20, 'Male', '9825446126', 'pqr@gmail.com'),
+('167', 'Vasu mendapara', 'mendapara', 62, 'Female', '9829494294', 'vasu@gmail.com'),
 ('987101', 'Safia', 'Malik', 22, 'Female', '9632587415', 'safia@gmail.com'),
 ('987102', 'Varun', 'Ilango', 24, 'Male', '9987565423', 'varun@gmail.com'),
 ('987103', 'Suja', 'Suresh', 45, 'Female', '7896541236', 'suja@hotmail.com'),
-('987104', 'Agatha', 'Elizabeth', 30, 'Female', '7845129635', 'agatha@gmail.com'),
-('987105', 'Zayed', 'Shah', 40, 'Male', '6789541235', 'zshah@hotmail.com'),
 ('987106', 'Vijay', 'Kumar', 60, 'Male', '8996574123', 'vijayk@yahoo.com'),
 ('987107', 'Meera', 'Das', 35, 'Female', '7845963259', 'meera@gmail.com');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `emplogin`
---
-
-CREATE TABLE `emplogin` (
-  `E_ID` decimal(7,0) NOT NULL,
-  `E_USERNAME` varchar(20) NOT NULL,
-  `E_PASS` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `emplogin`
---
-
-INSERT INTO `emplogin` (`E_ID`, `E_USERNAME`, `E_PASS`) VALUES
-('4567005', 'amaya', 'pass1'),
-('4567002', 'anita', 'pass2'),
-('4567010', 'daniel', 'pass3'),
-('4567003', 'harish', 'pass4'),
-('4567009', 'shayla', 'pass5'),
-('4567006', 'shoaib', 'pass6'),
-('4567001', 'varshini', 'pass7');
 
 -- --------------------------------------------------------
 
@@ -182,7 +114,7 @@ CREATE TABLE `employee` (
   `E_PHNO` decimal(10,0) NOT NULL,
   `E_MAIL` varchar(40) DEFAULT NULL,
   `E_ADD` varchar(40) DEFAULT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `employee`
@@ -211,14 +143,16 @@ CREATE TABLE `meds` (
   `CATEGORY` varchar(20) DEFAULT NULL,
   `MED_PRICE` decimal(6,2) NOT NULL,
   `LOCATION_RACK` varchar(30) DEFAULT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `meds`
 --
 
 INSERT INTO `meds` (`MED_ID`, `MED_NAME`, `MED_QTY`, `CATEGORY`, `MED_PRICE`, `LOCATION_RACK`) VALUES
-('123001', 'Dolo 650 MG', 625, 'Tablet', '1.00', 'rack 5'),
+('4', 'hello', 2, 'Tablet', '0.11', 'raw1'),
+('652', 'abc', 21, 'Tablet', '50.00', 'rack3'),
+('123001', 'Dolo 650 MG', 623, 'Tablet', '1.00', 'rack 5'),
 ('123002', 'Panadol Cold & Flu', 90, 'Tablet', '2.50', 'rack 6'),
 ('123003', 'Livogen', 25, 'Capsule', '5.00', 'rack 3'),
 ('123004', 'Gelusil', 440, 'Tablet', '1.25', 'rack 4'),
@@ -226,7 +160,6 @@ INSERT INTO `meds` (`MED_ID`, `MED_NAME`, `MED_QTY`, `CATEGORY`, `MED_PRICE`, `L
 ('123006', 'Benadryl 200 ML', 35, 'Syrup', '50.00', 'rack 10'),
 ('123007', 'Lopamide', 15, 'Capsule', '5.00', 'rack 7'),
 ('123008', 'Vitamic C', 90, 'Tablet', '3.00', 'rack 8'),
-('123009', 'Omeprazole', 35, 'Capsule', '4.00', 'rack 3'),
 ('123010', 'Concur 5 MG', 600, 'Tablet', '3.50', 'rack 9'),
 ('123011', 'Augmentin 250 ML', 115, 'Syrup', '80.00', 'rack 7');
 
@@ -245,7 +178,7 @@ CREATE TABLE `purchase` (
   `PUR_DATE` date NOT NULL,
   `MFG_DATE` date NOT NULL,
   `EXP_DATE` date NOT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `purchase`
@@ -286,6 +219,32 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `registration`
+--
+
+CREATE TABLE `registration` (
+  `username` varchar(20) NOT NULL,
+  `password` int(10) NOT NULL,
+  `f_name` varchar(20) NOT NULL,
+  `l_name` varchar(20) NOT NULL,
+  `photo` blob NOT NULL,
+  `b_date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `registration`
+--
+
+INSERT INTO `registration` (`username`, `password`, `f_name`, `l_name`, `photo`, `b_date`) VALUES
+('ceit', 12354, 'hello', 'worlds', 0x6170706c652e6a706567, '2023-04-14'),
+('niraj', 123456, 'niraj', 'chothani', 0x622e6a706567, '2023-04-06'),
+('kashyap', 123456, 'kashyap', 'patel', 0x69636f6e2e6a706567, '2023-04-14'),
+('', 0, '', '', '', '0000-00-00'),
+('', 0, '', '', '', '0000-00-00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sales`
 --
 
@@ -317,7 +276,12 @@ INSERT INTO `sales` (`SALE_ID`, `C_ID`, `S_DATE`, `S_TIME`, `TOTAL_AMT`, `E_ID`)
 (16, '987106', '2020-12-04', '18:52:21', '30.00', '1'),
 (17, '987103', '2020-12-04', '19:35:56', '57.50', '1'),
 (18, '987105', '2020-12-04', '19:36:56', '160.00', '4567001'),
-(20, '987103', '2020-12-04', '22:53:18', '150.00', '4567001');
+(20, '987103', '2020-12-04', '22:53:18', '150.00', '4567001'),
+(21, '987104', NULL, NULL, NULL, '1'),
+(22, '0', NULL, NULL, NULL, '1'),
+(23, '0', NULL, NULL, NULL, '1'),
+(24, '0', NULL, NULL, NULL, '1'),
+(25, '0', NULL, NULL, NULL, '1');
 
 --
 -- Triggers `sales`
@@ -370,7 +334,8 @@ INSERT INTO `sales_items` (`SALE_ID`, `MED_ID`, `SALE_QTY`, `TOT_PRICE`) VALUES
 (17, '123007', 5, '25.00'),
 (17, '123009', 5, '20.00'),
 (18, '123011', 2, '160.00'),
-(20, '123005', 25, '150.00');
+(20, '123005', 25, '150.00'),
+(21, '123001', 2, '2.00');
 
 --
 -- Triggers `sales_items`
@@ -407,6 +372,8 @@ CREATE TABLE `suppliers` (
 --
 
 INSERT INTO `suppliers` (`SUP_ID`, `SUP_NAME`, `SUP_ADD`, `SUP_PHNO`, `SUP_MAIL`) VALUES
+('2', 'gnu', 'mehshana', '1234567897', 'pqr@gmail.com'),
+('7', 'uvpoce', 'rajkot', '8780621820', 'xyz@gmail.com'),
 ('123', 'XYZ Pharmaceuticals', 'Chennai, Tamil Nadu', '8745632145', 'xyz@xyzpharma.com'),
 ('136', 'ABC PharmaSupply', 'Trichy', '7894561235', 'abc@pharmsupp.com'),
 ('145', 'Daily Pharma Ltd', 'Hyderabad', '7854699321', 'daily@dpharma.com'),
@@ -421,6 +388,13 @@ INSERT INTO `suppliers` (`SUP_ID`, `SUP_NAME`, `SUP_ADD`, `SUP_PHNO`, `SUP_MAIL`
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
+  ADD PRIMARY KEY (`E_USERNAME`),
+  ADD KEY `E_ID` (`E_ID`);
+
+--
+-- Indexes for table `chemist`
+--
+ALTER TABLE `chemist`
   ADD PRIMARY KEY (`A_USERNAME`),
   ADD UNIQUE KEY `USERNAME` (`A_USERNAME`),
   ADD KEY `ID` (`ID`);
@@ -432,13 +406,6 @@ ALTER TABLE `customer`
   ADD PRIMARY KEY (`C_ID`),
   ADD UNIQUE KEY `C_PHNO` (`C_PHNO`),
   ADD UNIQUE KEY `C_MAIL` (`C_MAIL`);
-
---
--- Indexes for table `emplogin`
---
-ALTER TABLE `emplogin`
-  ADD PRIMARY KEY (`E_USERNAME`),
-  ADD KEY `E_ID` (`E_ID`);
 
 --
 -- Indexes for table `employee`
@@ -489,7 +456,7 @@ ALTER TABLE `suppliers`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `SALE_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `SALE_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- Constraints for dumped tables
@@ -499,13 +466,13 @@ ALTER TABLE `sales`
 -- Constraints for table `admin`
 --
 ALTER TABLE `admin`
-  ADD CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `employee` (`E_ID`);
+  ADD CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`E_ID`) REFERENCES `employee` (`E_ID`);
 
 --
--- Constraints for table `emplogin`
+-- Constraints for table `chemist`
 --
-ALTER TABLE `emplogin`
-  ADD CONSTRAINT `emplogin_ibfk_1` FOREIGN KEY (`E_ID`) REFERENCES `employee` (`E_ID`);
+ALTER TABLE `chemist`
+  ADD CONSTRAINT `chemist_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `employee` (`E_ID`);
 
 --
 -- Constraints for table `purchase`
@@ -513,20 +480,6 @@ ALTER TABLE `emplogin`
 ALTER TABLE `purchase`
   ADD CONSTRAINT `purchase_ibfk_1` FOREIGN KEY (`SUP_ID`) REFERENCES `suppliers` (`SUP_ID`),
   ADD CONSTRAINT `purchase_ibfk_2` FOREIGN KEY (`MED_ID`) REFERENCES `meds` (`MED_ID`);
-
---
--- Constraints for table `sales`
---
-ALTER TABLE `sales`
-  ADD CONSTRAINT `sales_ibfk_1` FOREIGN KEY (`C_ID`) REFERENCES `customer` (`C_ID`),
-  ADD CONSTRAINT `sales_ibfk_2` FOREIGN KEY (`E_ID`) REFERENCES `employee` (`E_ID`);
-
---
--- Constraints for table `sales_items`
---
-ALTER TABLE `sales_items`
-  ADD CONSTRAINT `sales_items_ibfk_1` FOREIGN KEY (`SALE_ID`) REFERENCES `sales` (`SALE_ID`),
-  ADD CONSTRAINT `sales_items_ibfk_2` FOREIGN KEY (`MED_ID`) REFERENCES `meds` (`MED_ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
