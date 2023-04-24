@@ -30,21 +30,23 @@
                 <input type="password" name="pwd" required="Must Filled" id="pwd">
                 <label>Password</label>
             </div>
+            <div style="display:flex;">
             <button id="submit" type="submit" name="submit" value="Submit" class="btn btn-primary">
                 <span></span>
                 <span></span>
                 <span></span>
                 <span></span>
                 Submit
-            </button><br>
-            <a id="submit" type="submit" name="submit" value="Submit" id="rsubmit" href="registration.php">
+            </button>
+            <a id="submit" type="submit" name="submit" value="Submit" id="rsubmit" href="registration.php" style="margin-left: 25px;">
                 <span></span>
                 <span></span>
                 <span></span>
                 <span></span>
                 For Registration
             </a><br><br>
-            <a id="psubmit" href="mainpage1.php" ;>
+            </div><br>
+            <a id="psubmit" href="mainpage1.php" style="margin-left: 80px;">
                 <span></span>
                 <span></span>
                 <span></span>

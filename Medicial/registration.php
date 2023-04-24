@@ -47,7 +47,7 @@
                 <!-- <label>BirthDate</label> -->
             </div>
 
-            <div>
+            <div style="display:flex;">
                 <button id="rsubmit" type="submit" name="rsubmit" value="Submit" class="btn btn-primary"
                     style="margin: 0px;">
                     <span></span>

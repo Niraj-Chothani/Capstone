@@ -1,8 +1,8 @@
 <?php
-	include "config.php";
-	$sql="DELETE FROM meds where med_id='$_GET[id]'";
-	if ($conn->query($sql))
+include "config.php";
+$id = $_GET['id'];
+$sql = "DELETE FROM `meds` where `MED_ID`='$id'";
+if ($conn->query($sql))
 	header("location:inventory-view.php");
-	else
+else
 	echo "error";
-?>

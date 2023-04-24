@@ -42,7 +42,7 @@
     </style>
 
     <a href="adminchemistview.php" title="View Chemist">
-        <img src="inventory.png"
+        <img src="./img/inventory.png"
             style="padding:8px;margin-left: 700px;margin-top:120px;width:200px;height:200px;border:2px solid black; box-shadow: 0 8px 25px 0 rgba(71, 43, 229, 0.2), 0 8px 25px 0 rgba(71, 43, 229, 0.2); border-radius: 25px;"
             alt="View Chemist">
     </a>

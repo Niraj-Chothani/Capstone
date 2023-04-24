@@ -7,6 +7,21 @@ if (isset($_GET['id'])) {
     $result = $conn->query($qry1);
     $row = $result->fetch_row();
 }
+if (isset($_POST['update'])) {
+    if (isset($_POST['medname']) || isset($_POST['qty']) || isset($_POST['cat']) || isset($_POST['sp']) || isset($_POST['loc'])) {
+        $id = $_POST['medid'];
+        $name = $_POST['medname'];
+        $qty = $_POST['qty'];
+        $cat = $_POST['cat'];
+        $price = $_POST['sp'];
+        $lcn = $_POST['loc'];
+
+
+        $sql = "UPDATE meds SET med_name='$name',med_qty='$qty',category='$cat',med_price='$price',location_rack='$lcn' where med_id='$id'";
+        if ($conn->query($sql))
+            header("location:inventory-view.php");
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -115,25 +130,6 @@ if (isset($_GET['id'])) {
 
                 <input type="submit" name="update" value="Update" style="border-radius: 15px;background:linear-gradient(#141e30, #243b55);color: white;box-shadow: 0 15px 25px rgba(7, 205, 240, 0.6);">
             </form>
-
-            <?php
-
-            if (isset($_POST['medname']) || isset($_POST['qty']) || isset($_POST['cat']) || isset($_POST['sp']) || isset($_POST['loc'])) {
-                $id = $_POST['medid'];
-                $name = $_POST['medname'];
-                $qty = $_POST['qty'];
-                $cat = $_POST['cat'];
-                $price = $_POST['sp'];
-                $lcn = $_POST['loc'];
-
-
-                $sql = "UPDATE meds SET med_name='$name',med_qty='$qty',category='$cat',med_price='$price',location_rack='$lcn' where med_id='$id'";
-                if ($conn->query($sql))
-                    header("location:inventory-view.php");
-                
-            }
-
-            ?>
         </div>
     </div>
 

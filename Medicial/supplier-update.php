@@ -8,6 +8,22 @@
 			$result = $conn->query($qry1);
 			$row = $result -> fetch_row();
 		}
+
+        if( isset($_POST['update']))
+        {
+           $id = $_POST['sid'];
+           $name = $_POST['sname'];
+           $add = $_POST['sadd'];
+           $phno = $_POST['sphno'];
+           $mail = $_POST['smail'];
+            
+       $sql="UPDATE suppliers SET sup_name='$name',sup_add='$add',sup_phno='$phno',sup_mail='$mail' where sup_id='$id'";
+       if ($conn->query($sql))
+       header("location:supplier-view.php");
+       else
+       echo "<p style='font-size:8; color:red;'>Error! Unable to update.</p>";
+       }
+
 ?>
 
 <!DOCTYPE html>
@@ -118,23 +134,7 @@
                 <input type="submit" name="update" value="Update" style="border-radius: 15px;background:linear-gradient(#141e30, #243b55);color: white;box-shadow: 0 15px 25px rgba(7, 205, 240, 0.6);">
             </form>
 
-            <?php
-		 if( isset($_POST['update']))
-		 {
-			$id = $_POST['sid'];
-			$name = $_POST['sname'];
-			$add = $_POST['sadd'];
-			$phno = $_POST['sphno'];
-			$mail = $_POST['smail'];
-			 
-		$sql="UPDATE suppliers SET sup_name='$name',sup_add='$add',sup_phno='$phno',sup_mail='$mail' where sup_id='$id'";
-		if ($conn->query($sql))
-		header("location:supplier-view.php");
-		else
-		echo "<p style='font-size:8; color:red;'>Error! Unable to update.</p>";
-		}
-
-	?>
+            
         </div>
     </div>
 
