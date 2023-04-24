@@ -1,12 +1,11 @@
 <?php
 		include "config.php";
 	
-		if(isset($_GET['pid'])&&isset($_GET['sid'])&&isset($_GET['mid']))
+		if(isset($_GET['pid']))
 		{
 			$pid=$_GET['pid'];
-			$sid=$_GET['sid'];
-			$mid=$_GET['mid'];
-			$qry1="SELECT * FROM purchase WHERE p_id='$pid' and sup_id='$sid' and med_id='$mid'";
+		
+			$qry1="SELECT * FROM purchase WHERE p_id='$pid'";
 			$result = $conn->query($qry1);
 			$row = $result -> fetch_row();
 		}
@@ -23,10 +22,27 @@
 			$edate = $_POST['edate'];
 			 
 		$sql="UPDATE purchase SET p_cost='$cost',p_qty='$qty',pur_date='$pdate',mfg_date='$mdate',exp_date='$edate' 
-				where p_id='$pid' and sup_id='$sid' and med_id='$mid'";
+				where p_id='$pid'";
 		if ($conn->query($sql))
 		header("location:purchase-view.php");
 
+		 }
+
+         if( isset($_POST['update']))
+		 {
+			$pid=$_POST['pid'];
+			$sid=$_POST['sid'];
+			$mid=$_POST['mid'];
+			$qty = $_POST['pqty'];
+			$cost = $_POST['pcost'];
+			$pdate = $_POST['pdate'];
+			$mdate = $_POST['mdate'];
+			$edate = $_POST['edate'];
+			
+			$sql="UPDATE purchase SET p_cost='$cost',p_qty='$qty',pur_date='$pdate',mfg_date='$mdate',exp_date='$edate' 
+				where p_id='$pid'";
+			if (!($conn->query($sql)))
+				echo "<p style='font-size:8; color:red;'>Error! Unable to update.</p>";
 		 }
 ?>
 
@@ -47,24 +63,7 @@
 
     <div class="sidenav">
 
-        <?php 
-			if( isset($_POST['update']))
-		 {
-			$pid=$_POST['pid'];
-			$sid=$_POST['sid'];
-			$mid=$_POST['mid'];
-			$qty = $_POST['pqty'];
-			$cost = $_POST['pcost'];
-			$pdate = $_POST['pdate'];
-			$mdate = $_POST['mdate'];
-			$edate = $_POST['edate'];
-			
-			$sql="UPDATE purchase SET p_cost='$cost',p_qty='$qty',pur_date='$pdate',mfg_date='$mdate',exp_date='$edate' 
-				where p_id='$pid' and sup_id='$sid' and med_id='$mid'";
-			if (!($conn->query($sql)))
-				echo "<p style='font-size:8; color:red;'>Error! Unable to update.</p>";
-		 }
-	?>
+    
         <h2 style="font-family:Arial; color:white; text-align:center;"> Medical Store Management System </h2>
         <p style="margin-top:-20px;color:white;line-height:1;font-size:12px;text-align:center;margin-top:30px;"></p>
         <a href="adminmainpage.php">Dashboard</a>

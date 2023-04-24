@@ -106,7 +106,7 @@
 
         <br><br><br><br><br><br><br><br><br>
 
-        <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" >
+        <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
             <p>
                 <label for="start">Start Date:</label>
                 <input type="date" name="start">
