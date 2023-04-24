@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2023 at 11:22 AM
+-- Generation Time: Apr 17, 2023 at 10:36 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -20,67 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `pharmacy`
 --
-
-DELIMITER $$
---
--- Procedures
---
-CREATE DEFINER=`root`@`localhost` PROCEDURE `EXPIRY` ()  NO SQL BEGIN
-SELECT p_id,sup_id,med_id,p_qty,p_cost,pur_date,mfg_date,exp_date FROM purchase where exp_date between CURDATE() and DATE_SUB(CURDATE(), INTERVAL -6 MONTH);
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SEARCH_INVENTORY` (IN `search` VARCHAR(255))  NO SQL BEGIN
-DECLARE mid DECIMAL(6);
-DECLARE mname VARCHAR(50);
-DECLARE mqty INT;
-DECLARE mcategory VARCHAR(20);
-DECLARE mprice DECIMAL(6,2);
-DECLARE location VARCHAR(30);
-DECLARE exit_loop BOOLEAN DEFAULT FALSE;
-DECLARE MED_CURSOR CURSOR FOR SELECT MED_ID,MED_NAME,MED_QTY,CATEGORY,MED_PRICE,LOCATION_RACK FROM MEDS;
-DECLARE CONTINUE HANDLER FOR NOT FOUND SET exit_loop=TRUE;
-CREATE TEMPORARY TABLE IF NOT EXISTS T1 (medid decimal(6),medname varchar(50),medqty int,medcategory varchar(20),medprice decimal(6,2),medlocation varchar(30));
-OPEN MED_CURSOR;
-med_loop: LOOP
-FETCH FROM MED_CURSOR INTO mid,mname,mqty,mcategory,mprice,location;
-IF exit_loop THEN
-LEAVE med_loop;
-END IF;
-
-IF(CONCAT(mid,mname,mcategory,location) LIKE CONCAT('%',search,'%')) THEN
-INSERT INTO T1(medid,medname,medqty,medcategory,medprice,medlocation)
-VALUES(mid,mname,mqty,mcategory,mprice,location);
-END IF;
-END LOOP med_loop;
-CLOSE MED_CURSOR;
-SELECT medid,medname,medqty,medcategory,medprice,medlocation FROM T1; 
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `STOCK` ()  NO SQL BEGIN
-SELECT med_id, med_name,med_qty,category,med_price,location_rack FROM meds where med_qty<=50;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `TOTAL_AMT` (IN `ID` INT, OUT `AMT` DECIMAL(8,2))  NO SQL BEGIN
-UPDATE SALES SET S_DATE=SYSDATE(),S_TIME=CURRENT_TIMESTAMP(),TOTAL_AMT=(SELECT SUM(TOT_PRICE) FROM SALES_ITEMS WHERE SALES_ITEMS.SALE_ID=ID) WHERE SALES.SALE_ID=ID;
-SELECT TOTAL_AMT INTO AMT FROM SALES WHERE SALE_ID=ID;
-END$$
-
---
--- Functions
---
-CREATE DEFINER=`root`@`localhost` FUNCTION `P_AMT` (`start` DATE, `end` DATE) RETURNS DECIMAL(8,2) DETERMINISTIC NO SQL BEGIN
-DECLARE PAMT DECIMAL(8,2) DEFAULT 0.0;
-SELECT SUM(P_COST) INTO PAMT FROM PURCHASE WHERE PUR_DATE >= start AND PUR_DATE<= end;
-RETURN PAMT;
-END$$
-
-CREATE DEFINER=`root`@`localhost` FUNCTION `S_AMT` (`start` DATE, `end` DATE) RETURNS DECIMAL(8,2) NO SQL BEGIN
-DECLARE SAMT DECIMAL(8,2) DEFAULT 0.0;
-SELECT SUM(TOTAL_AMT) INTO SAMT FROM SALES WHERE S_DATE >= start AND S_DATE<= end;
-RETURN SAMT;
-END$$
-
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -211,10 +150,17 @@ CREATE TABLE `meds` (
 --
 
 INSERT INTO `meds` (`MED_ID`, `MED_NAME`, `MED_QTY`, `CATEGORY`, `MED_PRICE`, `LOCATION_RACK`) VALUES
+('4', 'hello', 2, 'Tablet', '0.11', 'raw1'),
+('652', 'abc', 21, 'Tablet', '50.00', 'rack3'),
 ('123001', 'Dolo 650 MG', 623, 'Tablet', '1.00', 'rack 5'),
+('123002', 'Panadol Cold & Flu', 90, 'Tablet', '2.50', 'rack 6'),
 ('123003', 'Livogen', 25, 'Capsule', '5.00', 'rack 3'),
 ('123004', 'Gelusil', 440, 'Tablet', '1.25', 'rack 4'),
-('123010', 'Concur 5 MG', 620, 'Tablet', '3.50', 'rack 9'),
+('123005', 'Cyclopam', 120, 'Tablet', '6.00', 'rack 2'),
+('123006', 'Benadryl 200 ML', 35, 'Syrup', '50.00', 'rack 10'),
+('123007', 'Lopamide', 15, 'Capsule', '5.00', 'rack 7'),
+('123008', 'Vitamic C', 90, 'Tablet', '3.00', 'rack 8'),
+('123010', 'Concur 5 MG', 600, 'Tablet', '3.50', 'rack 9'),
 ('123011', 'Augmentin 250 ML', 115, 'Syrup', '80.00', 'rack 7');
 
 -- --------------------------------------------------------
@@ -240,8 +186,10 @@ CREATE TABLE `purchase` (
 
 INSERT INTO `purchase` (`P_ID`, `SUP_ID`, `MED_ID`, `P_QTY`, `P_COST`, `PUR_DATE`, `MFG_DATE`, `EXP_DATE`) VALUES
 ('1001', '136', '123010', 200, '1500.50', '2020-03-01', '2019-05-05', '2021-05-10'),
+('1002', '123', '123002', 1000, '3000.00', '2020-02-01', '2018-06-01', '2020-12-05'),
 ('1003', '145', '123006', 20, '800.00', '2020-04-22', '2017-02-05', '2020-07-01'),
 ('1004', '156', '123004', 250, '1000.00', '2020-04-02', '2020-05-06', '2023-05-06'),
+('1005', '123', '123005', 200, '1200.00', '2020-02-01', '2019-08-02', '2021-04-01'),
 ('1006', '162', '123010', 500, '1500.00', '2019-04-22', '2018-01-01', '2020-05-02'),
 ('1007', '123', '123001', 500, '450.00', '2020-01-02', '2019-01-05', '2022-03-06');
 
@@ -275,7 +223,6 @@ DELIMITER ;
 --
 
 CREATE TABLE `registration` (
-  `id` int(20) NOT NULL,
   `username` varchar(20) NOT NULL,
   `password` int(10) NOT NULL,
   `f_name` varchar(20) NOT NULL,
@@ -288,10 +235,12 @@ CREATE TABLE `registration` (
 -- Dumping data for table `registration`
 --
 
-INSERT INTO `registration` (`id`, `username`, `password`, `f_name`, `l_name`, `photo`, `b_date`) VALUES
-(1, 'ceit', 12354, 'hello', 'worlds', 0x6170706c652e6a706567, '2023-04-14'),
-(2, 'niraj', 123456, 'niraj', 'chothani', 0x622e6a706567, '2023-04-06'),
-(3, 'kashyap', 123456, 'kashyap', 'patel', 0x69636f6e2e6a706567, '2023-04-14');
+INSERT INTO `registration` (`username`, `password`, `f_name`, `l_name`, `photo`, `b_date`) VALUES
+('ceit', 12354, 'hello', 'worlds', 0x6170706c652e6a706567, '2023-04-14'),
+('niraj', 123456, 'niraj', 'chothani', 0x622e6a706567, '2023-04-06'),
+('kashyap', 123456, 'kashyap', 'patel', 0x69636f6e2e6a706567, '2023-04-14'),
+('', 0, '', '', '', '0000-00-00'),
+('', 0, '', '', '', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -426,6 +375,7 @@ INSERT INTO `suppliers` (`SUP_ID`, `SUP_NAME`, `SUP_ADD`, `SUP_PHNO`, `SUP_MAIL`
 ('2', 'gnu', 'mehshana', '1234567897', 'pqr@gmail.com'),
 ('7', 'uvpoce', 'rajkot', '8780621820', 'xyz@gmail.com'),
 ('123', 'XYZ Pharmaceuticals', 'Chennai, Tamil Nadu', '8745632145', 'xyz@xyzpharma.com'),
+('136', 'ABC PharmaSupply', 'Trichy', '7894561235', 'abc@pharmsupp.com'),
 ('145', 'Daily Pharma Ltd', 'Hyderabad', '7854699321', 'daily@dpharma.com'),
 ('156', 'MedAll', 'Chennai', '9874585236', 'mainid@medall.com'),
 ('162', 'MedHead Pharmaceuticals', 'Trichy', '7894561335', 'abc@pharmsupp.com');
@@ -438,19 +388,24 @@ INSERT INTO `suppliers` (`SUP_ID`, `SUP_NAME`, `SUP_ADD`, `SUP_PHNO`, `SUP_MAIL`
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
-  ADD PRIMARY KEY (`E_USERNAME`);
+  ADD PRIMARY KEY (`E_USERNAME`),
+  ADD KEY `E_ID` (`E_ID`);
 
 --
 -- Indexes for table `chemist`
 --
 ALTER TABLE `chemist`
-  ADD PRIMARY KEY (`A_USERNAME`);
+  ADD PRIMARY KEY (`A_USERNAME`),
+  ADD UNIQUE KEY `USERNAME` (`A_USERNAME`),
+  ADD KEY `ID` (`ID`);
 
 --
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
-  ADD PRIMARY KEY (`C_ID`);
+  ADD PRIMARY KEY (`C_ID`),
+  ADD UNIQUE KEY `C_PHNO` (`C_PHNO`),
+  ADD UNIQUE KEY `C_MAIL` (`C_MAIL`);
 
 --
 -- Indexes for table `employee`
@@ -468,25 +423,24 @@ ALTER TABLE `meds`
 -- Indexes for table `purchase`
 --
 ALTER TABLE `purchase`
-  ADD PRIMARY KEY (`P_ID`);
-
---
--- Indexes for table `registration`
---
-ALTER TABLE `registration`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`P_ID`,`MED_ID`),
+  ADD KEY `SUP_ID` (`SUP_ID`),
+  ADD KEY `MED_ID` (`MED_ID`);
 
 --
 -- Indexes for table `sales`
 --
 ALTER TABLE `sales`
-  ADD PRIMARY KEY (`SALE_ID`);
+  ADD PRIMARY KEY (`SALE_ID`),
+  ADD KEY `C_ID` (`C_ID`),
+  ADD KEY `E_ID` (`E_ID`);
 
 --
 -- Indexes for table `sales_items`
 --
 ALTER TABLE `sales_items`
-  ADD PRIMARY KEY (`SALE_ID`,`MED_ID`);
+  ADD PRIMARY KEY (`SALE_ID`,`MED_ID`),
+  ADD KEY `MED_ID` (`MED_ID`);
 
 --
 -- Indexes for table `suppliers`
@@ -497,12 +451,6 @@ ALTER TABLE `suppliers`
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT for table `registration`
---
-ALTER TABLE `registration`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `sales`
