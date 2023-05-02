@@ -94,7 +94,7 @@
     </div>
 
     <center>
-        <div class="head" style="border-radius: 30px;background:linear-gradient(#141e30, #243b55);color: white;box-shadow: 0 15px 25px rgba(7, 205, 240, 0.6);">
+        <div class="head" style="margin-top:100px;border-radius: 30px;background:linear-gradient(#141e30, #243b55);color: white;box-shadow: 0 15px 25px rgba(7, 205, 240, 0.6);">
             <h2><u> STOCK EXPIRING WITHIN 6 MONTHS</u></h2>
         </div>
     </center>
